@@ -11,11 +11,7 @@ struct AddBookView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
     
-    @State private var title = ""
-    @State private var author = ""
-    @State private var rating = 3
-    @State private var genre = "Fantasy"
-    @State private var review = ""
+    @Bindable private var newBook = Book(title: "", author: "", genre: "Fantasy", review: "", rating: 3)
     
     let genres = ["Fantasy", "Horror", "Kids", "Mystery", "Poetry", "Romance", "Thriller"]
     
@@ -23,10 +19,10 @@ struct AddBookView: View {
         NavigationStack {
             Form {
                 Section {
-                    TextField("Name of book", text: $title)
-                    TextField("Author's name", text: $author)
+                    TextField("Name of book", text: $newBook.title)
+                    TextField("Author's name", text: $newBook.author)
 
-                    Picker("Genre", selection: $genre) {
+                    Picker("Genre", selection: $newBook.genre) {
                         ForEach(genres, id: \.self) {
                             Text($0)
                         }
@@ -34,17 +30,16 @@ struct AddBookView: View {
                 }
 
                 Section("Write a review") {
-                    TextEditor(text: $review)
-                    RatingView(rating: $rating)
+                    TextEditor(text: $newBook.review)
+                    RatingView(rating: $newBook.rating)
                 }
 
                 Section {
                     Button("Save") {
-                        let newBook = Book(title: title, author: author, genre: genre, review: review, rating: rating)
                         modelContext.insert(newBook)
-                        
                         dismiss()
                     }
+                    .disabled(!newBook.isValidBook())
                 }
             }
             .navigationTitle("Add Book")

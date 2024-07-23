@@ -23,4 +23,15 @@ class Book {
         self.review = review
         self.rating = rating
     }
+    
+    func isValidBook() -> Bool {
+        if title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
+            author.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
+            genre.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
+            review.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return false
+        }
+        
+        return true
+    }
 }
