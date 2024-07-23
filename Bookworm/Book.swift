@@ -15,6 +15,7 @@ class Book {
     var genre: String
     var review: String
     var rating: Int
+    var createdAt: Date?
     
     init(title: String, author: String, genre: String, review: String, rating: Int) {
         self.title = title
@@ -22,6 +23,7 @@ class Book {
         self.genre = genre
         self.review = review
         self.rating = rating
+        self.createdAt = Date.now
     }
     
     func isValidBook() -> Bool {
@@ -33,5 +35,9 @@ class Book {
         }
         
         return true
+    }
+    
+    func reviewDate() -> String {
+        createdAt?.formatted(date: .abbreviated, time: .omitted) ?? "N/A"
     }
 }
