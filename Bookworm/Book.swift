@@ -15,7 +15,7 @@ class Book {
     var genre: String
     var review: String
     var rating: Int
-    var createdAt: Date?
+    var createdAt: Date
     
     init(title: String, author: String, genre: String, review: String, rating: Int) {
         self.title = title
@@ -38,6 +38,6 @@ class Book {
     }
     
     func reviewDate() -> String {
-        createdAt?.formatted(date: .abbreviated, time: .omitted) ?? "N/A"
+        createdAt.formatted(date: .abbreviated, time: .omitted)
     }
 }
